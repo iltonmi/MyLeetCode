@@ -164,6 +164,7 @@
 5. Manacher's algorithm改版，时间O(n), 空间O(n)，这个时间复杂度的证明看另一篇文章
 
    ```java
+   //改良位运算版
    public String longestPalindrome(String s) {
        if(s == null || s.length() == 0) {
            return "";
@@ -173,12 +174,16 @@
        int r = -1;
        int max = 0;
        for(int i = 0; i != pArr.length; i++) {
+           //r = -1 < i = 0
            pArr[i] = r > i ? Math.min(pArr[(index << 1) - i], r - i) : 1;
            //left and right is the index of the char is going to be examined
            int left = i - pArr[i];
            int right = i + pArr[i];
            //(left & 1) == 0 相当于遇到分隔符、
            //非分隔符从manacher string到original string的映射是：i -> i >> 1
+           //说明：应该是((i + 1) >> 1) - 1
+           //i+1必为偶数, 因此((i+1) >> 1 - 1 )= (i >> 1)
+           //因此等价
            while(left > -1 && right < pArr.length && 
                  ((left & 1) == 0 || (s.charAt(left >> 1) == s.charAt(right >> 1)))
                 ) {
@@ -186,16 +191,54 @@
                left--;
                right++;
            }
+           //index第一次是0
            if(i + pArr[i] > r) {
                r = i + pArr[i];
                index = i;
            }
+           //max会被直接使用，所以必须>0
            if(pArr[i] > pArr[max]) {
                max = i;
            }
        }
-       return s.substring((max - pArr[max] + 1) >> 1, (max + pArr[max] - 1) >> 1);
+    return s.substring((max - pArr[max] + 2) >> 1, (max + pArr[max]) >> 1);
+   }
+   //实际版
+   class Solution {
+       public String longestPalindrome(String s) {
+           if(s == null || s.length() == 0) {
+               return "";
+           }
+           int[] pArr = new int[2 * s.length() + 1];
+           int index = -1;
+           int r = -1;
+           int max = 0;
+           for(int i = 0; i != pArr.length; i++) {
+               pArr[i] = r > i ? Math.min(pArr[(index << 1) - i], r - i) : 1;
+               //left and right is the index of the char is going to be examined
+               int left = i - pArr[i];
+               int right = i + pArr[i];
+               while(left > -1 && right < pArr.length &&
+                       ((left & 1) == 0 ||
+                        (s.charAt(((left + 1 ) >> 1) - 1) ==
+                         s.charAt(((right + 1 ) >> 1) - 1)))
+               ) {
+                   pArr[i]++;
+                   left--;
+                   right++;
+               }
+               if(i + pArr[i] > r) {
+                   r = i + pArr[i];
+                   index = i;
+               }
+               if(pArr[i] > pArr[max]) {
+                   max = i;
+               }
+           }
+           return s.substring(((max - pArr[max] + 3) >> 1) - 1,
+                              ((max + pArr[max] + 1) >> 1) - 1);
+       }
    }
    ```
-
+   
    
