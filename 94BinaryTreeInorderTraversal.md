@@ -70,6 +70,7 @@
            while(cur != null) {
                rightMost = cur.left;
                if(rightMost != null) {
+                   //search for the right boundary of the left sub-tree
                    while(rightMost.right != null && rightMost.right != cur) {
                        rightMost = rightMost.right;
                    }
