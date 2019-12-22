@@ -58,10 +58,36 @@
 
    
 
-3. morris遍历
+3. morris遍历, 空间O(1), 时间O(N)
 
+   ```java
+   class Solution {
+       private List<Integer> res = new LinkedList<>();
+    
+       public List<Integer> inorderTraversal(TreeNode root) {
+           TreeNode cur = root;
+           TreeNode rightMost = null;
+           while(cur != null) {
+               rightMost = cur.left;
+               if(rightMost != null) {
+                   while(rightMost.right != null && rightMost.right != cur) {
+                       rightMost = rightMost.right;
+                   }
+                   
+                   if(rightMost.right == null) {
+                       rightMost.right = cur;
+                       cur = cur.left;
+                       continue;
+                   } else {
+                       rightMost.right = null;
+                   }
+               }
+               res.add(cur.val);
+               cur = cur.right;
+           }
+           return res;
+       }
+   }
    ```
-   明天
-   ```
-
+   
    
