@@ -1,4 +1,4 @@
-#  139. Word Break ，复杂度待定
+#  139. Word Break ，慢慢消化
 
 Word break make my world break!
 
@@ -67,7 +67,7 @@ Word break make my world break!
 
    
 
-3. 宽度优先搜索
+3. 宽度优先搜索，时间O(N^2), 空间O(N)
 
    ```java
    class Solution {
@@ -97,4 +97,39 @@ Word break make my world break!
 
    
 
-4. DP
+4. DP，时间O(N^2), 空间O(N)
+
+   将问题分解成子问题，举例说明：
+
+   1. 假设有字符串s，其值为“catsanddogs”
+   2. 若s[0, j) = "cats“ 和 s[j, i) = "and" 都能由字典中的单词组成, 则s[0, i) = "catsand" 也可以由字典中的单词组成。
+
+   代码如下：
+
+   ```java
+   class Solution {
+       public boolean wordBreak(String s, List<String> wordDict) {
+           Set<String> set = new HashSet<>(wordDict);
+           if(set.contains(s)) {
+               return true;
+           }
+           boolean[] dp = new boolean[s.length() + 1];
+           dp[0] = true;
+           //外循环，字符s[0,1) -> s[0, s.length())
+           for(int i = 1; i <= s.length(); i++) {
+               //内循环，dp[0] -> dp[i-1]，dp[i]不包含i
+               //此处无法检查dp[i]，因为dp[i]正是我们需要判断的值
+               //存在问题：会漏检s.substring(0, s.length())
+               for(int j = 0; j < i; j++) {
+                   if(dp[j] && set.contains(s.substring(j, i))) {
+                       dp[i] = true;
+                       break;
+                   }
+               }
+           }
+           return dp[s.length()];
+       }
+   }
+   ```
+
+   
