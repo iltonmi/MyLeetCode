@@ -150,3 +150,56 @@ cur被指针保存后，就可以放心的移动了。
    
 
 4. Morris后序遍历
+
+   对于第二次遇到的节点，打印其左子树的右边界。
+
+   最后打印整棵树的右边界。
+
+   ```java
+   public static void morrisPos(Node head) {
+       Node cur = head;
+       Node mostRight = null;
+       while (cur != null) {
+           mostRight = cur.left;
+           if (mostRight != null) {
+               while(mostRight.right != null && mostRight.right != cur) {
+                   mostRight = mostRight.right;
+               }
+               if (mostRight.right == null) {
+                   mostRight.right = cur;
+                   cur = cur.left;
+                   continue;
+               } else {
+                   mostRight.right = null;
+                   traverseRightEdge(head);
+               }
+           }
+           cur = cur.right;
+       }
+       traverseRightEdge(head);
+   }
+   
+   private static void traverseRightEdge(Node head) {
+       Node tail = reverseRightEdge(head);
+       for (Node cur = tail; cur != null; cur = cur.right) {
+           doSomething();
+       }
+       reverseRightEdge(tail);
+   }
+   
+   private static Node reverseRightEdge(Node head) {
+       Node newHead = null;
+       Node next = null;
+       while (head != null) {
+           next = head.right;
+           head.right = newHead;
+           newHead = head;
+           head = next;
+       }
+       return newHead;
+   }
+   
+   private static void doSomething() {}
+   ```
+
+   
