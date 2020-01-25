@@ -182,7 +182,7 @@ cur被指针保存后，就可以放心的移动了。
    private static void traverseRightEdge(Node head) {
        Node tail = reverseRightEdge(head);
        for (Node cur = tail; cur != null; cur = cur.right) {
-           doSomething();
+           doSomething(cur);
        }
        reverseRightEdge(tail);
    }
