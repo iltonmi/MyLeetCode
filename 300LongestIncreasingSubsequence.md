@@ -1,4 +1,4 @@
-#  （mark）300. Longest Increasing Subsequence
+#  300. Longest Increasing Subsequence
 
  https://leetcode.com/articles/longest-increasing-subsequence/ 
 
@@ -91,10 +91,28 @@
 
 4. DP+二分查找，空间O(N)，时间(NlogN)。
 
-   这题很明显可以讲清楚怎么做，但很难说。
+    https://www.geeksforgeeks.org/longest-monotonically-increasing-subsequence-size-n-log-n/ 
+   
+   当我们遍历数组时，设当前元素 cur，若此前发现了若干个不同长度的递增子序列（相同长度的，只保存变长的可能性更大的一个），则分别比较 cur 和每个递增子序列的最大元素：
+
+   1. 若 cur 比目前最长的递增子序列的末尾元素更大，则说明出现了更长的递增子序列，这个新的子序列由原来最长的子序列和 cur 组成。
+   
+   2. 若 cur 处于某2个递增子序列的末尾元素之间，将二者之中更长的子序列替换成更短的子序列与 cur 组成的新的序列。因为同样长的子序列中末尾元素越小，在后面变长的可能性越大。
+   
+   3. 若 cur 比长度为1的递增子序列的元素还小，那么用其替换此元素。原因同2。
+   
+      核心思想：相同长度的子序列，保存可能变得更长的一个。
+   
+   ​	上面这个得到最长递增子序列的过程，最重要的操作是在所以队列的末尾元素中二分查找 cur 应该出现的位置。
+   
+   ​	如果我们只关注长度，而不关注最长递增序列的全貌，那么我们是否可以只保存所有子序列的末尾元素呢？
+   
+   ​	试想一下，将所有子序列左对齐，将所有末尾元素垂直向下映射到数组中。这样能够在不关注最长递增子序列全貌的情况下，正确地比较、替换和插入末尾元素。
+   
+   ​	最关键的地方是，末尾元素的个数正好就是最长递增子序列的长度。
    
    ```java
-class Solution {
+   class Solution {
        int validLen = 0;
        public int lengthOfLIS(int[] nums) {
            if(nums == null) {
