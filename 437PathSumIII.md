@@ -1,15 +1,11 @@
 # 437. Path Sum III
 
-1. 递归，空间O(h), 时间
-   $$
-   O(n^2)
-   $$
+1. 递归，空间O(h), 时间O(N ^ 2)
    
-
    ```java
    /**
     * Definition for a binary tree node.
-    * public class TreeNode {
+ * public class TreeNode {
     *     int val;
     *     TreeNode left;
     *     TreeNode right;
@@ -35,9 +31,9 @@
            rootStartPathSum(root.right, nextSum);
    }
    ```
-
    
-
+   
+   
 2. DFS迭代
 
    ```java
