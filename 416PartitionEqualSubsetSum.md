@@ -1,6 +1,6 @@
 #  416. Partition Equal Subset Sum
 
-这道题的本质是，数组是否存在和恰好为 sum / 2的数字组合。
+背包问题，这道题的本质是，数组是否存在和恰好为 sum / 2的数字组合。
 
 1. 递归，空间O(N), 时间O(2 ^ N)
 
@@ -99,8 +99,10 @@
 
    ​	因此有：
 
-   		1. dp [i] [j] = dp[i +1] [j] || (j - nums[i] >= 0 ? dp [i+1] [j - nums [i] ] : false);
-     		2. 基本条件：dp [nums.length-1] [j] = (num[nums.length - 1] [j] == j)，dp[i] [0] = false;
+   1. dp [i] [j] = dp[i +1] [j] || (j - nums[i] >= 0 ? dp [i+1] [j - nums [i] ] : false);
+   2. 通俗来说，dp [i] [j] 依赖其正下方的元素以及正下方的元素前面的所以元素。
+
+   3. 基本条件：dp [nums.length-1] [j] = (num[nums.length - 1] [j] == j)，dp[i] [0] = false;
 
    ```java
    class Solution { 
