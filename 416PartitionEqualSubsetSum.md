@@ -2,7 +2,7 @@
 
 这道题的本质是，数组是否存在和恰好为 sum / 2的数字组合。
 
-1. 递归(超时)，空间O(N), 时间O(2 ^ N)
+1. 递归，空间O(N), 时间O(2 ^ N)
 
    ```java
    class Solution {
@@ -17,6 +17,8 @@
            if((sum & 1) != 0) {
               return false;
            }
+           //Arrays.sort(nums);加了可以剪枝，竟然更慢哈哈哈，数据量不够大。
+           //DP也会更慢，都是判例惹的祸。
            return help(nums, sum / 2, 0);
        }
        
@@ -30,6 +32,10 @@
            for(int i = next; i < nums.length; i++) {
                if(help(nums, target - nums[i], i + 1)) {
                    return true;
+               }
+               //不加这个循环会超时哦
+               while(i < nums.length - 1 && nums[i+1] == nums[i]) {
+                   i++;
                }
            }
            return false;
@@ -147,7 +153,7 @@
            }
            for(int i = nums.length - 2; i >= 0; i--) {
                for(int j = dp.length - 1; j > 0; j--) {
-                   dp[j] = dp[j] || (j >= nums[i] ?
+                   dp[j] |= (j >= nums[i] ?
                                              dp[j-nums[i]] : false);
                }
            }
@@ -159,4 +165,3 @@
    ```
 
    
-
