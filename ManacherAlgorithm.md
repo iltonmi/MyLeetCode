@@ -16,16 +16,19 @@ public static int maxLcpsLength(String str) {
         return 0;
     }
     char[] charArr = manacherString(str);
+    //i位置上字符作为回文中心的最大回文半径
     int[] pArr = new int[charArr.length];
+    //最近一次更新r时，回文中心的位置
     int index = -1;
+    //之前遍历的所有字符的回文半径，最右即将到达的位置，即最右的回文的下一个位置。
     int r = -1;
     int max = Integer.MIN_VALUE;
     for (int i = 0; i != charArr.length; i++) {
-         //r与i的情况分为2大类，第2个大类分为3种情况，总共4种情况
+        //r与i的情况分为2大类，第2个大类分为3种情况，总共4种情况
         //1. r <= i
         //2. r > i：
-        //2.1：i + pArr[i]  - 1 = r，即分别以i和index为中心的两个最大回文串右边界重合。
-        //2.2、2.3：i + pArr[i]  - 1 < r, i + pArr[i]  - 1 > r
+        //2.1：i + pArr[i] - 1 = r - 1，即分别以i和index为中心的两个最大回文串右边界重合。
+        //2.2、2.3：i + pArr[i] - 1 < r - 1, i + pArr[i]  - 1 > r - 1
         pArr[i] = r > i ? Math.min(pArr[2 * index - i], r - i) : 1;
         //到此为止，对于2.2和2.3的情况，pArr[i]已经确定，
         //即：charArr[i - pArr[i]] ！= charArr[i + pArr[i]]
