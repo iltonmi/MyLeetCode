@@ -1,5 +1,7 @@
 # KMP
 
+> 从 [stackoverflow](https://stackoverflow.com/questions/9182651/whats-the-worst-case-complexity-for-kmp-when-the-goal-is-to-find-all-occurrence?r=SearchResults)中找到了一个时间复杂度分析很棒的链接 https://www.inf.hs-flensburg.de/lang/algorithmen/pattern/kmpen.htm 
+
 判断字符串 str 中是否包含子串 match。 
 
 **next [i]** : match [i-1] 结尾的后缀子串（不包含match [0]）和 match [0] 开头的前缀子串，两者的最大匹配长度。
@@ -16,7 +18,26 @@
 
 答案显然是否定的，这**违反了 next 数组的定义。**
 
-时间复杂度：O(N)，因为循环的内容就是
+时间复杂度：O(N)，分析：
+
+**先看**匹配过程：
+
+1. 方法的循环体中有3个分支。
+2. 循环中，si++发生的次数等于 s.length - 1。因此，进入前2个分支的次数是 s.length - 1。
+3. 其次，mi回退(match滑动)的过程等价于 match 对应 str 往右至少一个位置，显然它往右（match滑动）的最大次数是 s.length - m.length。因此，进入最后1个分支的次数是s.length - m.length。
+4. 所以循环发生的次数 2 * s.length - m.length + 1，即2N-M+1。
+
+**再看**next数组生成：
+
+1. 方法的循环体中有3个分支。
+2. 循环中，pos++发生的次数等于 m.length - 2。因此，进其中2个分支的次数是 m.length - 2。
+3. 其次，cn回退最多发生多少次，受限制于 ++cn 执行了多少次，++cn 和 pos++ 同时发生最多发生的次数是 m.length - 2。
+4. 所以循环发生的次数 2 * m.length - 4，即2M-4。
+
+**最后看**总复杂度：
+
+1. (2N-M+1) + (2M-4) = (2N+M-3) = O(2N+M)
+2. 因为 N >= M，O(2N+M) = O(3N) = O(N)
 
 ```java
 public static int getIndexOf(String s, String m) {
@@ -64,7 +85,9 @@ public static int[] getNextArray(char[] ms) {
     int[] next = new int[ms.length];
     next[0] = -1;
     next[1] = 0;
+    //当前将要计算的位置
     int pos = 2;
+    //当前将要被比较的位置
     int cn = 0;
     while (pos < next.length) { 
         if (ms[pos - 1] == ms[cn]) {
