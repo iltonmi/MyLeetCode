@@ -180,10 +180,13 @@
            int left = i - pArr[i];
            int right = i + pArr[i];
            //(left & 1) == 0 相当于遇到分隔符、
-           //非分隔符从manacher string到original string的映射是：i -> i >> 1
-           //说明：应该是((i + 1) >> 1) - 1
-           //i+1必为偶数, 因此((i+1) >> 1 - 1 )= (i >> 1)
-           //因此等价
+           //非分隔符从manacher string到original string的映射是：i -> i >>> 1
+          	//首先，非分隔符在manacher string中的所有肯定是奇数、
+           //然后，我们来分析从original string到manacher string的映射
+           //orgianl中索引i的字符前有i个字符，往这i个字符前方分别插入1个分隔符，总计插入i个字符
+           //最后在索引i的字符前插入一个分隔符，总共插入i+1个字符。
+           //所以origianl -> manacher = i -> 2i+1
+           //因此manacher -> original = j -> j / 2 -> j >>>1
            while(left > -1 && right < pArr.length && 
                  ((left & 1) == 0 || (s.charAt(left >> 1) == s.charAt(right >> 1)))
                 ) {
