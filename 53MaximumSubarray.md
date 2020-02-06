@@ -8,11 +8,30 @@
 
    the paragraph below was copied from his paper (with a little modifications):
 
-   algorithm that operates on arrays: it starts at the left end (element A[1]) and scans through to the right end (element A[n]), keeping track of the maximum sum subvector seen so far. The maximum is initially A[0]. Suppose we've solved the problem for A[1 .. i - 1]; how can we extend that to A[1 .. i]? The maximum sum in the first I elements is either the maximum sum in the first i - 1 elements (which we'll call MaxSoFar), or it is that of a subvector that ends in position i (which we'll call MaxEndingHere).
+   algorithm that operates on arrays: it starts at the left end (element A[1]) and scans through to the right end (element A[n]), keeping track of the maximum sum subvector seen so far. The maximum is initially A[0]. Suppose we've solved the problem for A[1 .. i - 1]; how can we extend that to A[1 .. i]? 
 
-   
+   The **maximum sum in the first i elements** is either the **maximum sum in the first i - 1 elements** (which we'll call MaxSoFar), **or it is that of a subvector that ends in position i** (which we'll call MaxEndingHere).
 
    MaxEndingHere is either A[i] plus the previous MaxEndingHere, or just A[i], whichever is larger.
+
+   对于maxSoFar，有**2种选择**。
+
+   1. 选A[i]
+
+   $$
+   maxEndingHere[1..i]=max(maxEndingHere[1..i-1]+A[i],A[i]);
+   $$
+
+   2. 不选A[i]
+      $$
+      maxSoFar[1..i-1]
+      $$
+
+   总结： 
+   $$
+   maxSoFar[1..i]=max(maxSoFar[1..i-1],maxEndingHere[1..i])
+   $$
+   
 
    ```java
    public static int maxSubArray(int[] A) {
