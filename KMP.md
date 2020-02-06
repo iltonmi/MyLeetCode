@@ -92,10 +92,12 @@ public static int[] getNextArray(char[] ms) {
     while (pos < next.length) { 
         if (ms[pos - 1] == ms[cn]) {
             next[pos++] = ++cn;
+            //此刻，cn = next[pos - 1]
         } else if (cn > 0) { 
             cn = next[cn];
         } else {
             next[pos++] = 0;
+            //此刻，cn = next[pos-1] = 0
         }
     }
     return next;
