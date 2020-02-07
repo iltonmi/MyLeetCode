@@ -2,7 +2,7 @@
 
 
 
-1. 递归，O(m)，m为最大深度
+1. 递归，空间O(H)，时间O(N)。
 
    ```java
    /**
@@ -34,36 +34,38 @@
 
    
 
-2. DFS
+2. DFS，空间O(H)，时间O(N)。
 
-```java
-    public int maxDepth(TreeNode root) {
-        if(root == null) {
-            return 0;
-        }
-        int res = 0;
-        Stack<TreeNode> nodes = new Stack<>();
-        Stack<Integer> depths = new Stack<>();
-        nodes.push(root);
-        depths.push(0);
-        while(!nodes.isEmpty()) {
-            TreeNode cur = nodes.pop();
-            Integer prevDepth = depths.pop();
-            if(cur == null) {
-                continue;
-            }
-            Integer curDepth = prevDepth + 1;
-            res = Math.max(res, curDepth);
-            nodes.push(cur.right);
-            depths.push(curDepth);
-            nodes.push(cur.left);
-            depths.push(curDepth);
-        }
-        return res;
-    }
-```
+   ```java
+   public int maxDepth(TreeNode root) {
+       if(root == null) {
+           return 0;
+       }
+       int res = 0;
+       Stack<TreeNode> nodes = new Stack<>();
+       Stack<Integer> depths = new Stack<>();
+       nodes.push(root);
+       depths.push(0);
+       while(!nodes.isEmpty()) {
+           TreeNode cur = nodes.pop();
+           Integer prevDepth = depths.pop();
+           if(cur == null) {
+               continue;
+           }
+           Integer curDepth = prevDepth + 1;
+           res = Math.max(res, curDepth);
+           nodes.push(cur.right);
+           depths.push(curDepth);
+           nodes.push(cur.left);
+           depths.push(curDepth);
+       }
+       return res;
+   }
+   ```
 
-3. BFS
+   
+
+3. BFS，空间O(H)，时间O(N)。
 
    ```java
        public int maxDepth(TreeNode root) {
