@@ -12,6 +12,7 @@
            if (prices.length == 2) {
                return res > 0 ? res : 0;
            }
+           //售出日索引i -> 令在索引i售出获得最大利润的买入日索引j
            Map<Integer, Integer> map = new HashMap<>();
            map.put(0, -1);
            map.put(1, 0);
@@ -71,21 +72,39 @@
 
 ```java
 public int maxProfit(int[] prices) {
-        if(prices == null || prices.length < 2) {
-            return 0;
-        }
-        int min = Integer.MAX_VALUE;
-        int res = 0;
-        for(int i = 0; i < prices.length; i++) {
-            if(prices[i] < min) {
-                //只需要记录最低价，最大利润不可能是最低价这一天卖出
-                min = prices[i];
-            } else {
-                //更新最大利润
-                res = Math.max(res, prices[i] - min);
-            }
-        }
-        return res;
+    if(prices == null || prices.length < 2) {
+        return 0;
     }
+    int min = Integer.MAX_VALUE;
+    int res = 0;
+    for(int i = 0; i < prices.length; i++) {
+        if(prices[i] < min) {
+            //只需要记录最低价，最大利润不可能是最低价这一天卖出
+            min = prices[i];
+        } else {
+            //更新最大利润
+            res = Math.max(res, prices[i] - min);
+        }
+    }
+    return res;
+}
+```
+
+```java
+public int maxProfit(int[] prices) {
+    if(prices == null || prices.length < 2) {
+        return 0;
+    }
+    int lowPrice = Integer.MAX_VALUE;
+    int maxProfit = 0;
+    for(int price : prices) {
+        if(price > lowPrice) {
+            maxProfit = Math.max(maxProfit, price - lowPrice);
+        } else {
+            lowPrice = price;
+        }
+    }
+    return maxProfit;
+}
 ```
 

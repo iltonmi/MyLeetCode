@@ -5,6 +5,8 @@
    ```java
        public int singleNumber(int[] nums) {
            int res = 0;
+           //异或，相同即为假，出现两次的数字异或后抵消变为0
+           //将所有数字异或，剩下的数字就是唯一出现的答案
            for(int i : nums) {
                res ^= i;
            }
