@@ -1,5 +1,7 @@
 #  204. Count Primes
 
+找出小于N的素数的数量。
+
 1. $$
    暴力，空间O(1)，时间O(N^{1.5})
    $$
@@ -65,7 +67,7 @@
 
    >  4 is not a prime because it is divisible by 2, which means all multiples of 4 must also be divisible by 2 and were already marked off. So we can skip 4 immediately and go to the next number, 5.  
 
-   观察4：4不是一个素数，因为它可以被2整除，并且它**已经被标记，所以直接跳过**。
+   观察4：4不是一个素数，因为它可以被2整除，并且**它和它的倍数已经被标记，所以直接跳过**。
 
    >  In fact, we can mark off multiples of 5 starting at 5 × 5 = 25, because 5 × 2 = 10 was already marked off by multiple of 2, similarly 5 × 3 = 15 was already marked off by multiple of 3.  
 
