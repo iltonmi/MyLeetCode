@@ -1,6 +1,8 @@
 #  234. Palindrome Linked List
 
-1. 快慢指针找到中间节点，翻转后半部分链表，遍历对比，还原链表。时间O(n), 空间O(1)
+ https://leetcode-cn.com/problems/palindrome-linked-list/solution/hui-wen-lian-biao-by-leetcode/ 
+
+1. （修改链表）快慢指针找到中间节点，翻转后半部分链表，遍历对比，还原链表。空间O(1)，时间O(N)。
 
    ```java
    /**
@@ -54,4 +56,90 @@
    }
    ```
 
+2. 使用列表储存节点的值，保存前继节点的指针，双指针检查。空间O(N)，时间O(N)。
+
+   ```java
+   public boolean isPalindrome(ListNode head) {
+       List<Integer> vals = new ArrayList<>();
    
+       // Convert LinkedList into ArrayList.
+       ListNode currentNode = head;
+       while (currentNode != null) {
+           vals.add(currentNode.val);
+           currentNode = currentNode.next;
+       }
+   
+       // Use two-pointer technique to check for palindrome.
+       int front = 0;
+       int back = vals.size() - 1;
+       while (front < back) {
+           // Note that we must use !equals() instead of !=
+           // because we are comparing Integer, not int.
+           if (!vals.get(front).equals(vals.get(back))) {
+               return false;
+           }
+           front++;
+           back--;
+       }
+       return true;
+   }
+   ```
+
+   
+
+3. 栈或递归栈，保存前继节点的指针(太挫了)。空间O(N)，时间O(N)。
+
+   1. 递归，其实有冗余。
+
+      ```java
+      class Solution {
+      
+          private ListNode frontPointer;
+      
+          private boolean recursivelyCheck(ListNode currentNode) {
+              if (currentNode != null) {
+                  if (!recursivelyCheck(currentNode.next)) {
+                      return false;
+                  }
+                  if (currentNode.val != frontPointer.val) {
+                      return false;
+                  }
+                  frontPointer = frontPointer.next;
+              }
+              return true;
+          }
+      
+          public boolean isPalindrome(ListNode head) {
+              frontPointer = head;
+              return recursivelyCheck(head);
+          }
+      }
+      ```
+
+      
+
+   2. 栈，直接把冗余的扔了。
+
+      ```java
+      public boolean isPalindrome(ListNode head) {
+          if(head == null) {
+              return true;
+          }
+          Deque<ListNode> stk = new ArrayDeque<>();
+          ListNode front = head;
+          while(head != null) {
+              stk.addFirst(head);
+              head = head.next;
+          }
+          while(front != stk.peekFirst() && stk.peekFirst().next != front) {
+              if(front.val != stk.peekFirst().val) {
+                  return false;
+              }
+              front = front.next;
+              stk.removeFirst();
+          }
+          return true;
+      }
+      ```
+
+      
