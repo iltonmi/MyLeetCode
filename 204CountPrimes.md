@@ -53,7 +53,7 @@
 
    
 
-2. 筛选法，空间O(N)，时间O(NlogN)。
+2. 筛选法（有点自底向上的味道），空间O(N)，时间O(NlogN)。
 
    
 
@@ -83,28 +83,28 @@
 
    ```java
    public int countPrimes(int n) {
-           if(n <= 2) {
-               return 0;
-           }
-           boolean[] notPrime = new boolean[n];
-           // Loop's ending condition is i * i < n instead of i < sqrt(n)
-           // to avoid repeatedly calling an expensive function sqrt().
-           for (int i = 2; i * i < n; i++) {
-               if (notPrime[i]) {
-                   continue;
-               }
-               for (int j = i * i; j < n; j += i) {
-                   notPrime[j] = true;
-               }
-           }
-           int count = 0;
-           for (int i = 2; i < n; i++) {
-               if (!notPrime[i]) {
-                   count++;
-               }
-           }
-           return count;
+       if(n <= 2) {
+           return 0;
        }
+       boolean[] notPrime = new boolean[n];
+       // Loop's ending condition is i * i < n instead of i < sqrt(n)
+       // to avoid repeatedly calling an expensive function sqrt().
+       for (int i = 2; i * i < n; i++) {
+           if (notPrime[i]) {
+               continue;
+           }
+           for (int j = i * i; j < n; j += i) {
+               notPrime[j] = true;
+           }
+       }
+       int count = 0;
+       for (int i = 2; i < n; i++) {
+           if (!notPrime[i]) {
+               count++;
+           }
+       }
+       return count;
+   }
    ```
 
    
