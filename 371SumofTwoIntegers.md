@@ -36,21 +36,21 @@ a ^ b 是不同的位，所以 a ^ b 不需要进位，但可能和上面提到�
 
    ```java
    public int getSum(int a, int b) {
-           if(a == 0) {
-               return b;
-           }
-           if(b == 0) {
-               return a;
-           }
-           int carry = (a & b) << 1;
-           int base = a ^ b;
-           while(carry != 0) {
-               int tempBase = base;
-               base = base ^ carry;
-               carry = (tempBase & carry) << 1;
-           }
-           return base;
+       if(a == 0) {
+           return b;
        }
+       if(b == 0) {
+           return a;
+       }
+       int carry = (a & b) << 1;
+       int base = a ^ b;
+       while(carry != 0) {
+           int tempBase = base;
+           base = base ^ carry;
+           carry = (tempBase & carry) << 1;
+       }
+       return base;
+   }
    ```
 
    
