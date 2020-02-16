@@ -58,7 +58,7 @@
 
    
 
-3. morris遍历, 空间O(1), 时间O(N)
+3. morris遍历，空间O(1)，时间O(N)
 
    ```java
    class Solution {
