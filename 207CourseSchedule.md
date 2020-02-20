@@ -2,7 +2,7 @@
 
 利用拓扑排序找出循环依赖。参考本人专门讲拓扑排序的文章。
 
-1. Kahn算法，利用拓扑排序，若入队列的课程数量不等于所需课程数量，则false。
+1. Kahn算法，利用拓扑排序，若入队列的课程数量不等于所需课程数量，则false。空间O(N)，时间O(N)
 
    ```java
    class Solution {
@@ -42,7 +42,7 @@
 
    
 
-2. DFS算法，利用拓扑排序，若存在节点discovered但未processed，则说明存在循环依赖。
+2. DFS算法，利用拓扑排序，若存在节点discovered但未processed，则说明存在循环依赖。空间O(N)，时间O(N)。
 
    ```java
    class Solution{

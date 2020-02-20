@@ -1,6 +1,6 @@
 #  160. Intersection of Two Linked Lists
 
-1. 遍历计算两个链表的长度差，时间O(n), 空间O(1)
+1. 遍历计算两个链表的长度差，空间O(1)，时间O(N)
 
    ```java
    /**
