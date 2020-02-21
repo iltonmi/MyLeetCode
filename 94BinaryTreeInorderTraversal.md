@@ -54,6 +54,24 @@
            return res;
        }
    }
+   
+   class Solution {
+       private List<Integer> res = new LinkedList<>();
+       
+       public List<Integer> inorderTraversal(TreeNode root) {
+           LinkedList<TreeNode> stack = new LinkedList<TreeNode>();
+   
+           while (true) {
+             while (root != null) {
+               stack.add(root);
+               root = root.left;
+             }
+             root = stack.removeLast();
+             res.add(root);
+             root = root.right;
+           }
+       }
+   }
    ```
 
    
