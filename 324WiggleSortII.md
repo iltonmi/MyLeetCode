@@ -70,5 +70,130 @@
 
  https://leetcode.com/problems/wiggle-sort-ii/discuss/77684/Summary-of-the-various-solutions-to-Wiggle-Sort-for-your-reference 
 
+1. 排序，开辟新数组储存结果。
 
+   > The naive way to partition the array into `L` and `S` groups is by sorting. Here we can sort the elements in either ascending or descending order. For either case, we need to figure out the index mapping rules for the **placement** part. Let `i` be the index of an element before placement and `j` the index after, for ascending order, we have:
+   > 	`j = 2 * (m - 1 - i)` if `i < m`
+   > 	`j = 2 * (n - 1 - i) + 1` if `i >= m`
+   > for descending order, the mapping rule can be combined into one expression:
+   > 	`j = (2 * i + 1) % (n | 1)`. 
+
+   ```java
+   public void wiggleSort(int[] nums) {
+       int n = nums.length;
+       //m 前半部分的长度，偶则包含下中位数，奇则包含中位数
+       int m = (n + 1) >> 1;
+       int[] copy = Arrays.copyOf(nums, n);
+       Arrays.sort(copy);
+       //复制前半部分
+       for (int i = m - 1, j = 0; i >= 0; i--, j += 2) {
+           nums[j] = copy[i];
+       }
+        //复制后半部分
+       for (int i = n - 1, j = 1; i >= m; i--, j += 2) {
+           nums[j] = copy[i];
+       }
+   }
+   ```
+
+   
+
+2. 随机化快速选择，空间O(N)，平均时间复杂度O(N)，最坏时间复杂度O(N ^ 2)
+
+   ```java
+   public void wiggleSort(int[] nums) {
+       int n = nums.length;
+       int m = (n + 1) >> 1;
+       int[] copy = Arrays.copyOf(nums, n);
+       int median = kthSmallestNumber(nums, m);
+   
+       for (int i = 0, j = 0, k = n - 1; j <= k;) {
+           if (copy[j] < median) {
+               swap(copy, i++, j++);
+           } else if (copy[j] > median) {
+               swap(copy, j, k--);
+           } else {
+               j++;
+           }
+       }
+   
+       for (int i = m - 1, j = 0; i >= 0; i--, j += 2) {
+           nums[j] = copy[i];
+       }
+   
+       for (int i = n - 1, j = 1; i >= m; i--, j += 2) {
+           nums[j] = copy[i];
+       }
+   }
+   
+   private int kthSmallestNumber(int[] nums, int k) {
+       Random random = new Random();
+   
+       for (int i = nums.length - 1; i >= 0; i--) {
+           swap(nums, i, random.nextInt(i + 1));
+       }
+   
+       int l = 0, r = nums.length - 1;
+       k--;
+   
+       while (l < r) {
+           int m = getMiddle(nums, l, r);
+   
+           if (m < k) {
+               l = m + 1;
+           } else if (m > k) {
+               r = m - 1;
+           } else {
+               break;
+           }
+       }
+   
+       return nums[k];
+   }
+   
+   private int getMiddle(int[] nums, int l, int r) {
+       int i = l;
+   
+       for (int j = l + 1; j <= r; j++) {
+           if (nums[j] < nums[l]) swap(nums, ++i, j);
+       }
+   
+       swap(nums, l, i);
+       return i;
+   }
+   
+   private void swap(int[] nums, int i, int j) {
+       int t = nums[i];
+       nums[i] = nums[j];
+       nums[j] = t;
+   }
+   ```
+
+   
+
+3. 有空还得再理解一下
+
+   ```java
+   public void wiggleSort(int[] nums) {
+       int n = nums.length;
+       int m = (n + 1) >> 1;
+       int median = kthSmallestNumber(nums, m);
+   
+       for (int i = 0, j = 0, k = n - 1; j <= k;) {
+           if (nums[A(j, n)] > median) {
+               swap(nums, A(i++, n), A(j++, n));
+           } else if (nums[A(j, n)] < median) {
+               swap(nums, A(j, n), A(k--, n));
+           } else {
+               j++;
+           }
+       }
+   }
+   
+   private int A(int i, int n) {
+       return (2 * i + 1) % (n | 1);
+   }
+   ```
+
+   
 
