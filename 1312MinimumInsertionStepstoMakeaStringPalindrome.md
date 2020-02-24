@@ -30,7 +30,7 @@ where `s1 = s` and `s2 = reversed(s)`
 Time `O(N^2)`
 Space `O(N^2)`
 
-
+等价于最长公共子序列。
 
 ```java
 public int minInsertions(String s) {

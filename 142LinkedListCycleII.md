@@ -17,52 +17,14 @@
 
    **理论证明：**
 
-   1. 看图说话：假设环的长度是C，头节点到节点0（入口节点）的部分为F。快节点位于节点h的位置。
-
-   2. 在某一时刻，快慢指针在节点h相遇。
-
-   3. 有如下公式
-      $$
-      慢指针经过节点数S_1=F+a+c_1(a+b)
-      $$
+   > Just make a easier understanding.
+> Suppose the first meet at step **k**,the distance between the start node of list and the start node of cycle is **F**, and the distance between the start node of cycle and the first meeting node is **a**. Then **2k = (F + a + n1(a+b)) = 2(F + a + n2(a+b)) ==> F + a = n(a+b) = nr.** Steps moving from start node to the start of the cycle is just **s**, moving from **m** by **s** steps would be the start of the cycle, covering n cycles. In other words, they meet at the entry of cycle.
    
-      $$
-      快指针经过节点数S_2=F+a+c_2(a+b)
-      $$
+**2k = (F + a + n1(a+b)) = 2(F + a + n2(a+b)) ==> F + a = n(a+b) = nr.**
    
-      由快慢指针的倍速关系可以得到如下方程：
-      $$
-      2S_1=S_2,代入得到：F+a=(c_2-2c_1)(a+b),进一步得到,F=(c_2-2c_1-1)(a+b)+b
-      $$
+   上面这条等式，说明：F + a = n 个环的长度。因此，从环的入口走 F + a 步会重新回到环的入口。
    
-      $$
-      c_1=\frac{c_2}{2}+\frac{b-2F-a}{2(a+b)}
-      $$
-   
-      无论c1和c2如何变化，F的值都不会变，因此:
-      $$
-      令c_2-2c_1-1=0,得到F=b
-      $$
-   
-    **总结：当环存在的时候，链表有一个性质，就是头结点到入环点和快慢指针碰撞点到入环点的距离相等。** 
-   
-   **时间复杂度证明：**
-   
-   ​	1. 假设经过F次迭代后，慢节点到达入环的第1个节点，此时快节点位于h的位置。
-   
-    2. 后来经过x次迭代，快慢节点相遇。得到公式如下：
-       $$
-       2x=x+a+(a+b),x=2a+b
-       $$
-   
-    3. 因此，时间复杂度如下：
-       $$
-       F+x=F+(a+b)+a=N+a=O(N)
-       $$
-   
-   **补充一个问题：为什么快慢指针迭代步数的倍数是2？**
-   
-
+   即从A点（相遇点）走F步会回到环的入口。
    
    
    代码如下：
