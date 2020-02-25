@@ -155,7 +155,9 @@
        int i = l;
    
        for (int j = l + 1; j <= r; j++) {
-           if (nums[j] < nums[l]) swap(nums, ++i, j);
+           if (nums[j] < nums[l]) {
+               swap(nums, ++i, j);
+           }
        }
    
        swap(nums, l, i);
