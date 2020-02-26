@@ -86,6 +86,7 @@
        for(int j = 1, i = 0;  j < s.length(); j++) {
            if(map.containsKey(s.charAt(j))) {
                //因为s.charAt(j)可能小于i, 而没有被清除出去
+               //比如12321，窗口缩窄到32，第二次遇到1时，1不在窗口，但仍存在其记录
                i = Math.max(map.get(s.charAt(j)) + 1, i);
            }
            res = Math.max(res, j - i + 1);
