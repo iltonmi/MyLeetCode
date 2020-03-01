@@ -4,8 +4,10 @@
 
    使用双向链表，从头到尾优先度递增，即头节点为最近最少使用（LRU）的节点，双向链表插入删除节点的时间复杂度都是O(1)。
 
-   使用HashMap保存key到节点的映射。有一个问题，当移除指定节点时，需要知道对应的key，因此还需要另一个HashMap保存节点到key的映射。
+   通过key获取value，因此需要使用HashMap保存key到节点的映射。
 
+   当移除指定节点时，需要情况keyNodeMap中的entry，需要根据节点查询对应的key，因此还需要另一个HashMap保存节点到key的映射。
+   
    ```java
    /**
     * Your LRUCache object will be instantiated and called as such:
@@ -135,7 +137,7 @@
        public Node(T value) {
            this.value = value;
        }
-   }
+}
    ```
-
+   
    
