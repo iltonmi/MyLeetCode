@@ -1,6 +1,6 @@
 # 108. Convert Sorted Array to Binary Search Tree
 
-1. 二分查找根节点，递归，空间O(logN)，空间O(N)
+1. 二分查找根节点，递归，空间O(logN)，时间O(N)
 
    ```java
    public TreeNode sortedArrayToBST(int[] num) {

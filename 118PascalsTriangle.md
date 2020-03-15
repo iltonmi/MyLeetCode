@@ -63,4 +63,22 @@
 }
    ```
    
+2. 一维DP， 空间O(N)，时间O(N ^ 2)
+
+   ```java
+   public List<List<Integer>> generate(int numRows) {
+       List<List<Integer>> res = new ArrayList<>();
+       List<Integer> temp = new ArrayList<>(numRows + 1);
+       for (int i = 0; i < numRows; i++) {
+           temp.add(0, 1);
+           for (int j = 1; j < temp.size() - 1; j++) {
+               temp.set(j, temp.get(j) + temp.get(j + 1));
+           }
+           //这个用法非常实用，值得学习
+           res.add(new ArrayList<>(temp));
+       }
+       return res;
+   }
+   ```
+
    
