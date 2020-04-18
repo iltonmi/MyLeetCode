@@ -1,6 +1,6 @@
 #  54. Spiral Matrix
 
-通用解法：定位左上角和右上角的左边。
+通用解法：定位左上角和右下角的左边。
 
 本题注意：矩阵可能只有一列或者一行。
 
@@ -31,7 +31,7 @@ class Solution {
     
     private void addEdge(List<Integer> res, int tr, int tc, int dr, int dc) {
         if(tr == dr) {
-            //only ont row
+            //only one row
             for(int i = tc; i <= dc; i++) {
                 res.add(m[tr][i]);
             }
