@@ -17,12 +17,17 @@ public ListNode rotateRight(ListNode head, int k) {
         tail = tail.next;
         ++size;
     }
-    if(k % size == 0) {
+    //如果size == 1，那么无论k的值，rotate的结果都是head
+    if(size == 1) {
         return head;
     }
-    int step = size - k % size;
+    k %= size;
+    if(k == 0) {
+        return head;
+    }
+    int step = size - k;
     ListNode cur = head;
-    for(int i = 0; i < step - 1; ++i){
+    for(int i = 1; i < step; ++i){
         cur = cur.next;
     }
     tail.next = head;

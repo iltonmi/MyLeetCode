@@ -24,7 +24,7 @@
                if(appeared.add(numList.get(i))) {
                    Collections.swap(numList, first, i);
                    backtrack(numList, first + 1);
-                   Collections.swap(numList, first, i);   
+                   Collections.swap(numList, first, i);
                }
            }
        }
